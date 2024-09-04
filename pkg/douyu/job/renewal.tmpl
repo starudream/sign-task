@@ -1,0 +1,13 @@
+斗鱼送礼物
+{{if .Error}}执行失败（{{.Error}}）
+{{else if .Skip}}无到期礼物，跳过执行
+{{- else -}}
+前：{{range $i, $v := .Gifts1 -}}{{if gt $i 0}}, {{end}}{{$v.Name}}*{{$v.Count}}{{end}}
+{{range $i, $v := .Badges1 -}}
+{{$v.Anchor}}【{{$v.Name}}】等级{{$v.Level}} 亲密度{{$v.Intimacy}}
+{{end -}}
+后：{{range $i, $v := .Gifts2 -}}{{if gt $i 0}}, {{end}}{{$v.Name}}*{{$v.Count}}{{end}}
+{{range $i, $v := .Badges2 -}}
+{{$v.Anchor}}【{{$v.Name}}】等级{{$v.Level}} 亲密度{{$v.Intimacy}}
+{{end -}}
+{{end}}

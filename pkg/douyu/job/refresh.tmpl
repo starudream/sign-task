@@ -1,0 +1,6 @@
+斗鱼每日登录
+{{if .Error}}执行失败（{{.Error}}）
+{{- else -}}
+前：{{range $i, $v := .Gifts1 -}}{{if gt $i 0}}, {{end}}{{$v.Name}}*{{$v.Count}}{{end}}
+后：{{range $i, $v := .Gifts2 -}}{{if gt $i 0}}, {{end}}{{$v.Name}}*{{$v.Count}}{{end}}
+{{end}}

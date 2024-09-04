@@ -1,0 +1,10 @@
+百度贴吧每日签到
+{{if .Error}}执行失败（{{.Error}}）
+{{- else -}}
+已成功：{{range $i, $v := .Success -}}{{if gt $i 0}}, {{end}}{{$v}}{{end}}
+{{if gt (len .SignErr) 0 -}}
+{{range $k, $v := .SignErr -}}
+{{$k}}（{{$v}}）
+{{end -}}
+{{end -}}
+{{end}}

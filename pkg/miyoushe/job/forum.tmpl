@@ -1,0 +1,7 @@
+米游社每日任务
+{{if .Error}}执行失败（{{.Error}}）
+{{- else}}在版区【{{.GameName}}】{{if .HasSigned}}已签到{{else if .IsSuccess}}签到成功，获得{{.Points}}米游币{{else}}签到失败（{{.SignErr}}）{{end}}
+  浏览{{.PostView}}/{{.TotalPostView}}个帖子
+  点赞{{.PostUpvote}}/{{.TotalPostUpvote}}个帖子
+  分享{{.PostShare}}/{{.TotalPostShare}}个帖子
+{{end}}

@@ -1,0 +1,7 @@
+库街区每日任务
+{{range $i, $v := .Records -}}
+在版区【{{$v.GameName}}】{{if $v.HasSigned}}已签到{{else if $v.IsSuccess}}签到成功{{else}}签到失败（{{$v.Error}}）{{end}}
+  浏览{{$v.PostView}}/{{$.TotalPostView}}个帖子
+  喜欢{{$v.PostLike}}/{{$.TotalPostLike}}个帖子
+  分享{{$v.PostShare}}/{{$.TotalPostShare}}个帖子
+{{end}}

@@ -1,0 +1,7 @@
+森空岛游戏签到
+{{if .Error}}执行失败（{{.Error}}）
+{{- else}}
+{{- range $i, $v := .Records -}}
+在游戏【{{$v.GameName}}】角色【{{$v.PlayerName}}】区服【{{$v.PlayerChannel}}】{{if $v.Error}}失败（{{$v.Error}}）{{else}}获得 {{$v.Award}}{{end}}
+{{end}}
+{{end}}
