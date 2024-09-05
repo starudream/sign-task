@@ -2,6 +2,7 @@ package geetest
 
 import (
 	"fmt"
+	"net/url"
 	"time"
 
 	"github.com/starudream/go-lib/core/v2/config"
@@ -31,10 +32,15 @@ func init() {
 func ttR() *resty.Request {
 	if ttClient == nil {
 		ttClient = resty.New().
-			SetTimeout(10*time.Second).
-			SetProxy(tt.Proxy).
+			SetTimeout(30*time.Second).
 			SetHeader("Accept-Encoding", "gzip").
 			SetHeader("User-Agent", resty.UAWindowsChrome)
+		if tt.Proxy != "" {
+			_, err := url.Parse(tt.Proxy)
+			if err == nil {
+				ttClient.SetProxy(tt.Proxy)
+			}
+		}
 	}
 	return ttClient.R()
 }
