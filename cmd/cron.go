@@ -9,7 +9,6 @@ import (
 	_ "github.com/starudream/sign-task/pkg/miyoushe"
 	_ "github.com/starudream/sign-task/pkg/skland"
 	_ "github.com/starudream/sign-task/pkg/tieba"
-	_ "github.com/starudream/sign-task/pkg/xiaoheihe"
 )
 
 var cronCmd = cobra.NewCommand(func(c *cobra.Command) {
