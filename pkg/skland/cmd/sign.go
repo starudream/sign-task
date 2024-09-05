@@ -24,8 +24,7 @@ var (
 			if err != nil {
 				return err
 			}
-			sg := job.SignGame(account)
-			fmt.Println(sg.String())
+			fmt.Println(job.SignGame(account).String())
 			return
 		}
 	})

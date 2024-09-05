@@ -1,8 +1,6 @@
 package douyu
 
 import (
-	"fmt"
-
 	"github.com/starudream/sign-task/pkg/cron"
 	"github.com/starudream/sign-task/pkg/douyu/config"
 	"github.com/starudream/sign-task/pkg/douyu/job"
@@ -16,8 +14,6 @@ func init() {
 type douyu struct {
 }
 
-var _ cron.Job = (*douyu)(nil)
-
 func (douyu) Name() string {
 	return "douyu"
 }
@@ -28,10 +24,8 @@ func (j douyu) Do() {
 	}
 }
 
-func (douyu) do(account config.Account) {
-	rf := job.Refresh(account)
-	util.Ntfy(fmt.Sprintf("%s %s", account.Phone, rf))
+func (j douyu) do(a config.Account) {
+	util.NtfyJob(j, a.GetKey(), job.Refresh(a).String())
 
-	rn := job.Renewal(account)
-	util.Ntfy(fmt.Sprintf("%s %s", account.Phone, rn))
+	util.NtfyJob(j, a.GetKey(), job.Renewal(a).String())
 }

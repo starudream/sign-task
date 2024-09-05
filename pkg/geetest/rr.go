@@ -18,7 +18,7 @@ type rrConfig struct {
 var rr = rrConfig{}
 
 func init() {
-	_ = config.Unmarshal("rr", &rr)
+	_ = config.Unmarshal("geetest.rr", &rr)
 }
 
 func RRKey() string {

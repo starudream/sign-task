@@ -21,7 +21,7 @@ var tt = ttConfig{
 }
 
 func init() {
-	_ = config.Unmarshal("tt", &tt)
+	_ = config.Unmarshal("geetest.tt", &tt)
 }
 
 func TTKey() string {

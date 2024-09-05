@@ -1,8 +1,6 @@
 package tieba
 
 import (
-	"fmt"
-
 	"github.com/starudream/sign-task/pkg/cron"
 	"github.com/starudream/sign-task/pkg/tieba/config"
 	"github.com/starudream/sign-task/pkg/tieba/job"
@@ -16,8 +14,6 @@ func init() {
 type tieba struct {
 }
 
-var _ cron.Job = (*tieba)(nil)
-
 func (tieba) Name() string {
 	return "tieba"
 }
@@ -28,7 +24,6 @@ func (j tieba) Do() {
 	}
 }
 
-func (tieba) do(account config.Account) {
-	sf := job.SignForum(account)
-	util.Ntfy(fmt.Sprintf("%s %s", account.Phone, sf))
+func (j tieba) do(a config.Account) {
+	util.NtfyJob(j, a.GetKey(), job.SignForum(a).String())
 }

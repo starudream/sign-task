@@ -15,8 +15,6 @@ func init() {
 
 type skland struct{}
 
-var _ cron.Job = (*skland)(nil)
-
 func (skland) Name() string {
 	return "skland"
 }
@@ -27,13 +25,12 @@ func (j skland) Do() {
 	}
 }
 
-func (skland) do(account config.Account) {
-	account, err := job.Refresh(account)
+func (j skland) do(a config.Account) {
+	a, err := job.Refresh(a)
 	if err != nil {
-		util.Ntfy(fmt.Sprintf("%s 执行失败（%s）", account.Phone, err))
+		util.NtfyJob(j, a.GetKey(), fmt.Sprintf("执行失败（%s）", err))
 		return
 	}
 
-	sg := job.SignGame(account)
-	util.Ntfy(fmt.Sprintf("%s %s", account.Phone, sg))
+	util.NtfyJob(j, a.GetKey(), job.SignGame(a).String())
 }

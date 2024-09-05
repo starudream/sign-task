@@ -1,11 +1,16 @@
 $.version
 $.time
 
-$.rr
-$.rr.key
-
-$.tt
-$.tt.key
+$.geetest
+$.geetest.cron
+$.geetest.cron.disable
+$.geetest.cron.spec
+$.geetest.cron.startup
+$.geetest.cron.jitter
+$.geetest.rr
+$.geetest.rr.key
+$.geetest.tt
+$.geetest.tt.key
 
 $.douyu
 $.douyu.cron

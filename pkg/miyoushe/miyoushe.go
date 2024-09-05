@@ -16,8 +16,6 @@ func init() {
 type miyoushe struct {
 }
 
-var _ cron.Job = (*miyoushe)(nil)
-
 func (miyoushe) Name() string {
 	return "miyoushe"
 }
@@ -28,16 +26,14 @@ func (j miyoushe) Do() {
 	}
 }
 
-func (miyoushe) do(account config.Account) {
-	account, err := job.Refresh(account)
+func (j miyoushe) do(a config.Account) {
+	a, err := job.Refresh(a)
 	if err != nil {
-		util.Ntfy(fmt.Sprintf("%s 执行失败（%s）", account.Phone, err))
+		util.NtfyJob(j, a.GetKey(), fmt.Sprintf("执行失败（%s）", err))
 		return
 	}
 
-	sg := job.SignGame(account)
-	util.Ntfy(fmt.Sprintf("%s %s", account.Phone, sg))
+	util.NtfyJob(j, a.GetKey(), job.SignGame(a).String())
 
-	sf := job.SignForum(account)
-	util.Ntfy(fmt.Sprintf("%s %s", account.Phone, sf))
+	util.NtfyJob(j, a.GetKey(), job.SignForum(a).String())
 }

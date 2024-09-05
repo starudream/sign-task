@@ -19,8 +19,7 @@ var (
 		c.Use = "forum <account phone>"
 		c.Short = "Sign forum"
 		c.Run = func(cmd *cobra.Command, args []string) {
-			sf := job.SignForum(config.GetAccountOrFirst(args...))
-			fmt.Println(sf.String())
+			fmt.Println(job.SignForum(config.GetAccountOrFirst(args...)).String())
 		}
 	})
 )

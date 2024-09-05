@@ -18,20 +18,16 @@ var (
 	execRefreshCmd = cobra.NewCommand(func(c *cobra.Command) {
 		c.Use = "refresh <account phone>"
 		c.Short = "Exec refresh"
-		c.RunE = func(cmd *cobra.Command, args []string) (err error) {
-			rf := job.Refresh(config.GetAccountOrFirst(args...))
-			fmt.Println(rf.String())
-			return
+		c.Run = func(cmd *cobra.Command, args []string) {
+			fmt.Println(job.Refresh(config.GetAccountOrFirst(args...)).String())
 		}
 	})
 
 	execRenewalCmd = cobra.NewCommand(func(c *cobra.Command) {
 		c.Use = "renewal <account phone>"
 		c.Short = "Exec renewal"
-		c.RunE = func(cmd *cobra.Command, args []string) (err error) {
-			rn := job.Renewal(config.GetAccountOrFirst(args...))
-			fmt.Println(rn.String())
-			return
+		c.Run = func(cmd *cobra.Command, args []string) {
+			fmt.Println(job.Renewal(config.GetAccountOrFirst(args...)).String())
 		}
 	})
 )

@@ -1,8 +1,6 @@
 package kuro
 
 import (
-	"fmt"
-
 	"github.com/starudream/sign-task/pkg/cron"
 	"github.com/starudream/sign-task/pkg/kuro/config"
 	"github.com/starudream/sign-task/pkg/kuro/job"
@@ -15,8 +13,6 @@ func init() {
 
 type kuro struct{}
 
-var _ cron.Job = (*kuro)(nil)
-
 func (kuro) Name() string {
 	return "kuro"
 }
@@ -27,10 +23,8 @@ func (j kuro) Do() {
 	}
 }
 
-func (kuro) do(account config.Account) {
-	sg := job.SignGame(account)
-	util.Ntfy(fmt.Sprintf("%s %s", account.Phone, sg))
+func (j kuro) do(a config.Account) {
+	util.NtfyJob(j, a.GetKey(), job.SignGame(a).String())
 
-	sf := job.SignForum(account)
-	util.Ntfy(fmt.Sprintf("%s %s", account.Phone, sf))
+	util.NtfyJob(j, a.GetKey(), job.SignForum(a).String())
 }

@@ -11,8 +11,6 @@ func init() {
 type xiaoheihe struct {
 }
 
-var _ cron.Job = (*xiaoheihe)(nil)
-
 func (xiaoheihe) Name() string {
 	return "xiaoheihe"
 }
