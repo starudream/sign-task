@@ -1,7 +1,6 @@
 package geetest
 
 import (
-	"context"
 	"fmt"
 	"time"
 
@@ -12,13 +11,29 @@ import (
 
 // https://www.kancloud.cn/rrocr/rrocr/2294926
 type rrConfig struct {
-	Key string `json:"key" yaml:"key"`
+	Key   string `json:"key"   yaml:"key"`
+	Proxy string `json:"proxy" yaml:"proxy"`
 }
 
-var rr = rrConfig{}
+var (
+	rr = rrConfig{}
+
+	rrClient *resty.Client
+)
 
 func init() {
 	_ = config.Unmarshal("geetest.rr", &rr)
+}
+
+func rrR() *resty.Request {
+	if rrClient == nil {
+		rrClient = resty.New().
+			SetTimeout(10*time.Second).
+			SetProxy(rr.Proxy).
+			SetHeader("Accept-Encoding", "gzip").
+			SetHeader("User-Agent", resty.UAWindowsChrome)
+	}
+	return rrClient.R()
 }
 
 func RRKey() string {
@@ -29,10 +44,8 @@ func RRPoint(req *V3Param) (int, error) {
 	form := gh.MS{
 		"appkey": gh.Ternary(req.Key != "", req.Key, rr.Key),
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	res, err := resty.ParseResp[*rrResp, *rrResp](
-		resty.R().SetContext(ctx).SetError(&rrResp{}).SetResult(&rrResp{}).SetFormData(form).Post("http://api.rrocr.com/api/integral.html"),
+		rrR().SetError(&rrResp{}).SetResult(&rrResp{}).SetFormData(form).Post("http://api.rrocr.com/api/integral.html"),
 	)
 	if err != nil {
 		return -1, fmt.Errorf("[rrocr] %w", err)
@@ -63,10 +76,8 @@ func RR(req *V3Param) (*V3Data, error) {
 		"challenge": req.Challenge,
 		"referer":   req.Referer,
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-	defer cancel()
 	res, err := resty.ParseResp[*rrResp, *rrResp](
-		resty.R().SetContext(ctx).SetError(&rrResp{}).SetResult(&rrResp{}).SetFormData(form).Post("http://api.rrocr.com/api/recognize.html"),
+		rrR().SetError(&rrResp{}).SetResult(&rrResp{}).SetFormData(form).Post("http://api.rrocr.com/api/recognize.html"),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("[rrocr] %w", err)

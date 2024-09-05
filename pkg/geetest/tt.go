@@ -1,7 +1,6 @@
 package geetest
 
 import (
-	"context"
 	"fmt"
 	"time"
 
@@ -14,14 +13,30 @@ import (
 type ttConfig struct {
 	Key    string `json:"key"     yaml:"key"`
 	ItemId string `json:"item_id" yaml:"item_id"`
+	Proxy  string `json:"proxy"   yaml:"proxy"`
 }
 
-var tt = ttConfig{
-	ItemId: "388",
-}
+var (
+	tt = ttConfig{
+		ItemId: "388",
+	}
+
+	ttClient *resty.Client
+)
 
 func init() {
 	_ = config.Unmarshal("geetest.tt", &tt)
+}
+
+func ttR() *resty.Request {
+	if ttClient == nil {
+		ttClient = resty.New().
+			SetTimeout(10*time.Second).
+			SetProxy(tt.Proxy).
+			SetHeader("Accept-Encoding", "gzip").
+			SetHeader("User-Agent", resty.UAWindowsChrome)
+	}
+	return ttClient.R()
 }
 
 func TTKey() string {
@@ -32,10 +47,8 @@ func TTPoint(req *V3Param) (string, error) {
 	form := gh.MS{
 		"appkey": gh.Ternary(req.Key != "", req.Key, tt.Key),
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	res, err := resty.ParseResp[*ttResp, *ttResp](
-		resty.R().SetContext(ctx).SetError(&ttResp{}).SetResult(&ttResp{}).SetFormData(form).Post("http://api.ttocr.com/api/points"),
+		ttR().SetError(&ttResp{}).SetResult(&ttResp{}).SetFormData(form).Post("http://api.ttocr.com/api/points"),
 	)
 	if err != nil {
 		return "-1", fmt.Errorf("[ttocr] %w", err)
@@ -105,10 +118,8 @@ func ttRecognize(req *V3Param) (string, error) {
 		"referer":   req.Referer,
 		"itemid":    req.ItemId,
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	res, err := resty.ParseResp[*ttResp, *ttResp](
-		resty.R().SetContext(ctx).SetError(&ttResp{}).SetResult(&ttResp{}).SetFormData(form).Post("http://api.ttocr.com/api/recognize"),
+		ttR().SetError(&ttResp{}).SetResult(&ttResp{}).SetFormData(form).Post("http://api.ttocr.com/api/recognize"),
 	)
 	if err != nil {
 		return "", fmt.Errorf("[ttocr] %w", err)
@@ -121,10 +132,8 @@ func ttResult(req *V3Param, resultId string) (*V3Data, error) {
 		"appkey":   gh.Ternary(req.Key != "", req.Key, tt.Key),
 		"resultid": resultId,
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 	res, err := resty.ParseResp[*ttResp, *ttResp](
-		resty.R().SetContext(ctx).SetError(&ttResp{}).SetResult(&ttResp{}).SetFormData(form).Post("http://api.ttocr.com/api/results"),
+		ttR().SetError(&ttResp{}).SetResult(&ttResp{}).SetFormData(form).Post("http://api.ttocr.com/api/results"),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("[ttocr] %w", err)

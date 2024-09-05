@@ -9,8 +9,11 @@ $.geetest.cron.startup
 $.geetest.cron.jitter
 $.geetest.rr
 $.geetest.rr.key
+$.geetest.rr.proxy
 $.geetest.tt
 $.geetest.tt.key
+$.geetest.tt.item_id
+$.geetest.tt.proxy
 
 $.douyu
 $.douyu.cron

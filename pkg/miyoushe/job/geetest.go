@@ -29,15 +29,15 @@ func verify(c *api.Client) (data *geetest.V3Data, _ error) {
 func dm(param *geetest.V3Param) (data *geetest.V3Data, err error) {
 	param.Referer = api.RefererAct
 
-	if geetest.TTKey() != "" {
-		data, err = geetest.TT(param)
+	if geetest.RRKey() != "" {
+		data, err = geetest.RR(param)
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	if geetest.RRKey() != "" {
-		data, err = geetest.RR(param)
+	if geetest.TTKey() != "" {
+		data, err = geetest.TT(param)
 		if err != nil {
 			return nil, err
 		}
