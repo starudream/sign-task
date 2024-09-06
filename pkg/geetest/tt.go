@@ -48,11 +48,11 @@ func TTKey() string {
 }
 
 func TTPoint(req *V3Param) (string, error) {
-	form := gh.MS{
+	query := gh.MS{
 		"appkey": gh.Ternary(req.Key != "", req.Key, tt.Key),
 	}
 	res, err := resty.ParseResp[*ttResp, *ttResp](
-		ttR().SetError(&ttResp{}).SetResult(&ttResp{}).SetFormData(form).Post("http://api.ttocr.com/api/points"),
+		ttR().SetError(&ttResp{}).SetResult(&ttResp{}).SetQueryParams(query).Get("http://api.ttocr.com/api/points"),
 	)
 	if err != nil {
 		return "-1", fmt.Errorf("[ttocr] %w", err)
