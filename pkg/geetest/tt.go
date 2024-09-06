@@ -18,9 +18,7 @@ type ttConfig struct {
 }
 
 var (
-	tt = ttConfig{
-		ItemId: "388",
-	}
+	tt = ttConfig{}
 
 	ttClient *resty.Client
 )
@@ -122,7 +120,7 @@ func ttRecognize(req *V3Param) (string, error) {
 		"gt":        req.GT,
 		"challenge": req.Challenge,
 		"referer":   req.Referer,
-		"itemid":    req.ItemId,
+		"itemid":    gh.Ternary(req.ItemId != "", req.ItemId, "388"),
 	}
 	res, err := resty.ParseResp[*ttResp, *ttResp](
 		ttR().SetError(&ttResp{}).SetResult(&ttResp{}).SetFormData(form).Post("http://api.ttocr.com/api/recognize"),

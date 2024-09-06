@@ -17,7 +17,6 @@ func TestTT(t *testing.T) {
 	resp, err := geetest.TT(&geetest.V3Param{
 		GT:        "",
 		Challenge: "",
-		ItemId:    "388",
 	})
 	testutil.LogNoErr(t, err, resp)
 }
