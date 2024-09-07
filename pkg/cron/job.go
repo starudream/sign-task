@@ -51,10 +51,10 @@ func Run() {
 		}
 		if c.Spec != "" {
 			err := cron.AddJob(c.Spec, k, func() {
-				jitter := gh.Ternary(c.Jitter > 0, time.Duration(float64(c.Jitter)*rand.Float64())*time.Second, time.Duration(0))
+				jitter := int(gh.Ternary(c.Jitter > 0, float64(c.Jitter)*rand.Float64(), 0))
 				if jitter > 0 {
 					slog.Debug("cron job %s jitter %d seconds", k, jitter)
-					time.Sleep(jitter)
+					time.Sleep(time.Duration(jitter) * time.Second)
 				}
 				v.Do()
 			})
