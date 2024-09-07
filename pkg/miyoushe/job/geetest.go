@@ -26,16 +26,22 @@ func verify(c *api.Client) (data *geetest.V3Data, _ error) {
 	return
 }
 
-func dm(param *geetest.V3Param) (data *geetest.V3Data, err error) {
+func dm(param *geetest.V3Param) (*geetest.V3Data, error) {
 	param.Referer = api.RefererAct
 
 	if geetest.RRKey() != "" {
-		return geetest.RR(param)
+		data, err := geetest.RR(param)
+		if err == nil {
+			return data, nil
+		}
 	}
 
 	if geetest.TTKey() != "" {
-		return geetest.TT(param)
+		data, err := geetest.TT(param)
+		if err == nil {
+			return data, nil
+		}
 	}
 
-	return
+	return nil, fmt.Errorf("no geetest config")
 }
