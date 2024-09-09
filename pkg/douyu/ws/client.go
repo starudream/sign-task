@@ -1,9 +1,7 @@
 package ws
 
 import (
-	"crypto/md5"
 	"crypto/tls"
-	"encoding/hex"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -82,8 +80,7 @@ func Login(p LoginParams) error {
 func (c *Client) login(p LoginParams) error {
 	devId := util.UUID()
 	rt := strconv.FormatInt(time.Now().Unix(), 10)
-	b := md5.Sum([]byte(rt + hash + devId))
-	vk := hex.EncodeToString(b[:])
+	vk := util.MD5Hex(rt + hash + devId)
 
 	c.write(
 		"type", "loginreq",

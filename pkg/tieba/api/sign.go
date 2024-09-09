@@ -2,12 +2,12 @@ package api
 
 import (
 	"bytes"
-	"crypto/md5"
-	"encoding/hex"
 	"slices"
 	"strings"
 
 	"github.com/starudream/go-lib/resty/v2"
+
+	"github.com/starudream/sign-task/util"
 )
 
 func addSign(r *resty.Request) *resty.Request {
@@ -29,7 +29,6 @@ func addSign(r *resty.Request) *resty.Request {
 	}
 	buf.WriteString("tiebaclient!!!")
 
-	b := md5.Sum(buf.Bytes())
-	r.FormData.Set("sign", strings.ToUpper(hex.EncodeToString(b[:])))
+	r.FormData.Set("sign", strings.ToUpper(util.MD5Hex(buf.String())))
 	return r
 }

@@ -1,8 +1,6 @@
 package api
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"fmt"
 	"math/rand/v2"
 	"time"
@@ -35,8 +33,7 @@ func DS1() string {
 
 func ds1(t int64, r string) (string, string) {
 	s := fmt.Sprintf("salt=%s&t=%d&r=%s", AppSaltK2, t, r)
-	b := md5.Sum([]byte(s))
-	return s, fmt.Sprintf("%d,%s,%s", t, r, hex.EncodeToString(b[:]))
+	return s, fmt.Sprintf("%d,%s,%s", t, r, util.MD5Hex(s))
 }
 
 // DS2 https://github.com/UIGF-org/mihoyo-api-collect/blob/3a9116ea538941cfead749572df1f364cb9f9c8d/other/authentication.md#ds
@@ -50,6 +47,5 @@ func ds2(t int64, r int, body, query string) (string, string) {
 		r += 542367
 	}
 	s := fmt.Sprintf("salt=%s&t=%d&r=%d&b=%s&q=%s", AppSalt6X, t, r, body, query)
-	b := md5.Sum([]byte(s))
-	return s, fmt.Sprintf("%d,%d,%s", t, r, hex.EncodeToString(b[:]))
+	return s, fmt.Sprintf("%d,%d,%s", t, r, util.MD5Hex(s))
 }

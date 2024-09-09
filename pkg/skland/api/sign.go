@@ -1,10 +1,6 @@
 package api
 
 import (
-	"crypto/hmac"
-	"crypto/md5"
-	"crypto/sha256"
-	"encoding/hex"
 	"net/url"
 	"strconv"
 	"time"
@@ -45,16 +41,5 @@ func sign(headers signHeaders, method, path, token string, query url.Values, bod
 
 	content := path + str + headers.Timestamp + json.MustMarshalString(headers)
 
-	b1 := hmac256(token, content)
-	s1 := hex.EncodeToString(b1)
-	b2 := md5.Sum([]byte(s1))
-	s2 := hex.EncodeToString(b2[:])
-
-	return content, s2
-}
-
-func hmac256(key, content string) []byte {
-	h := hmac.New(sha256.New, []byte(key))
-	h.Write([]byte(content))
-	return h.Sum(nil)
+	return content, util.MD5Hex(util.HMAC256Hex(token, content))
 }
