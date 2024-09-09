@@ -4,7 +4,6 @@ import (
 	"github.com/starudream/sign-task/pkg/cron"
 	"github.com/starudream/sign-task/pkg/tieba/config"
 	"github.com/starudream/sign-task/pkg/tieba/job"
-	"github.com/starudream/sign-task/util"
 )
 
 func init() {
@@ -25,5 +24,5 @@ func (j tieba) Do() {
 }
 
 func (j tieba) do(a config.Account) {
-	util.NtfyJob(j, a.GetKey(), job.SignForum(a).String())
+	cron.Ntfy(j, a.GetKey(), job.SignForum(a).String())
 }

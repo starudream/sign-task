@@ -4,7 +4,6 @@ import (
 	"github.com/starudream/sign-task/pkg/cron"
 	"github.com/starudream/sign-task/pkg/kuro/config"
 	"github.com/starudream/sign-task/pkg/kuro/job"
-	"github.com/starudream/sign-task/util"
 )
 
 func init() {
@@ -24,7 +23,7 @@ func (j kuro) Do() {
 }
 
 func (j kuro) do(a config.Account) {
-	util.NtfyJob(j, a.GetKey(), job.SignGame(a).String())
+	cron.Ntfy(j, a.GetKey(), job.SignGame(a).String())
 
-	util.NtfyJob(j, a.GetKey(), job.SignForum(a).String())
+	cron.Ntfy(j, a.GetKey(), job.SignForum(a).String())
 }
