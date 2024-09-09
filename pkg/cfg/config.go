@@ -14,6 +14,8 @@ import (
 	"github.com/starudream/go-lib/core/v2/config"
 	"github.com/starudream/go-lib/core/v2/slog"
 	"github.com/starudream/go-lib/core/v2/utils/osutil"
+
+	"github.com/starudream/sign-task/util"
 )
 
 //go:embed config_keys
@@ -81,6 +83,13 @@ func Save() error {
 	if filename == "" {
 		filename = filepath.Join(osutil.ExeDir(), osutil.ExeName()+".yaml")
 		slog.Info("no config file specified, use default: %s", filename)
+	} else {
+		diff := compare(filename, bs)
+		if diff == "" {
+			slog.Debug("config file not changed")
+		} else if diff != "" {
+			slog.Debug("config file changed, diff: %s", diff)
+		}
 	}
 
 	err = os.WriteFile(filename, bs, 0644)
@@ -91,4 +100,20 @@ func Save() error {
 	slog.Info("save config success", slog.String("file", filename))
 
 	return nil
+}
+
+func compare(srcPath string, dstData []byte) string {
+	srcData, err := os.ReadFile(srcPath)
+	if err != nil {
+		return ""
+	}
+
+	var src, dst any
+	err1 := yaml.Unmarshal(srcData, &src)
+	err2 := yaml.Unmarshal(dstData, &dst)
+	if err1 != nil || err2 != nil {
+		return ""
+	}
+
+	return util.Diff(src, dst)
 }
