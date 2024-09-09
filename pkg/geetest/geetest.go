@@ -22,7 +22,7 @@ func (j geetest) Do() {
 		if err != nil {
 			cron.Ntfy(j, "套套", fmt.Sprintf("执行失败（%s）", err))
 		} else {
-			cron.Ntfy(j, "套套", fmt.Sprintf("剩余点数：%s", point))
+			cron.Ntfy(j, "套套", fmt.Sprintf("剩余点数：%d", point))
 		}
 	}
 

@@ -3,6 +3,7 @@ package geetest
 import (
 	"fmt"
 	"net/url"
+	"strconv"
 	"time"
 
 	"github.com/starudream/go-lib/core/v2/config"
@@ -47,7 +48,7 @@ func TTKey() string {
 	return tt.Key
 }
 
-func TTPoint(req *V3Param) (string, error) {
+func TTPoint(req *V3Param) (int, error) {
 	query := gh.MS{
 		"appkey": gh.Ternary(req.Key != "", req.Key, tt.Key),
 	}
@@ -55,9 +56,9 @@ func TTPoint(req *V3Param) (string, error) {
 		ttR().SetError(&ttResp{}).SetResult(&ttResp{}).SetQueryParams(query).Get("http://api.ttocr.com/api/points"),
 	)
 	if err != nil {
-		return "-1", fmt.Errorf("[ttocr] %w", err)
+		return -1, fmt.Errorf("[ttocr] %w", err)
 	}
-	return res.Points, nil
+	return strconv.Atoi(res.Points)
 }
 
 func TT(req *V3Param) (*V3Data, error) {
