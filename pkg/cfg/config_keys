@@ -85,6 +85,16 @@ $.tieba.accounts
 $.tieba.accounts.phone
 $.tieba.accounts.bduss
 
+$.aliyun
+$.aliyun.cron
+$.aliyun.cron.disable
+$.aliyun.cron.spec
+$.aliyun.cron.startup
+$.aliyun.cron.jitter
+$.aliyun.accounts
+$.aliyun.accounts.key
+$.aliyun.accounts.secret
+
 $.log
 $.log.console
 $.log.console.disabled

@@ -16,6 +16,7 @@ var options = []yaml.EncodeOption{
 		"$.miyoushe": []*yaml.Comment{yaml.HeadComment(" 米游社")},
 		"$.skland":   []*yaml.Comment{yaml.HeadComment(" 森空岛")},
 		"$.tieba":    []*yaml.Comment{yaml.HeadComment(" 百度贴吧")},
+		"$.aliyun":   []*yaml.Comment{yaml.HeadComment(" 阿里云")},
 		"$.log":      []*yaml.Comment{yaml.HeadComment(" 日志", "  https://pkg.go.dev/github.com/starudream/go-lib/core/v2/config/global#Config")},
 		"$.ntfy":     []*yaml.Comment{yaml.HeadComment(" 通知", "  https://pkg.go.dev/github.com/starudream/go-lib/ntfy/v2#Config")},
 	}),
