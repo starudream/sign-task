@@ -1,25 +1,37 @@
 package geetest
 
-type V3Param struct {
-	Key        string `json:"key,omitempty"`
-	ItemId     string `json:"itemid,omitempty"`
-	Referer    string `json:"referer,omitempty"`
-	GT         string `json:"gt"`
-	Challenge  string `json:"challenge"`
-	NewCaptcha int    `json:"new_captcha,omitempty"`
-	Success    int    `json:"success,omitempty"`
+import (
+	"fmt"
+
+	"github.com/starudream/sign-task/pkg/cron"
+)
+
+func init() {
+	cron.Register(geetest{})
 }
 
-type V3Data struct {
-	Challenge string `json:"challenge"`
-	Validate  string `json:"validate"`
-	Seccode   string `json:"seccode,omitempty"`
+type geetest struct{}
+
+func (geetest) Name() string {
+	return "geetest"
 }
 
-type V4Data struct {
-	CaptchaId     string `json:"captcha_id"`
-	LotNumber     string `json:"lot_number,omitempty"`
-	PassToken     string `json:"pass_token,omitempty"`
-	GenTime       string `json:"gen_time,omitempty"`
-	CaptchaOutput string `json:"captcha_output,omitempty"`
+func (j geetest) Do() {
+	if TTKey() != "" {
+		point, err := TTPoint(&V3Param{})
+		if err != nil {
+			cron.Ntfy(j, "套套", fmt.Sprintf("执行失败（%s）", err))
+		} else {
+			cron.Ntfy(j, "套套", fmt.Sprintf("剩余点数：%s", point))
+		}
+	}
+
+	if RRKey() != "" {
+		point, err := RRPoint(&V3Param{})
+		if err != nil {
+			cron.Ntfy(j, "人人", fmt.Sprintf("执行失败（%s）", err))
+		} else {
+			cron.Ntfy(j, "人人", fmt.Sprintf("剩余点数：%d", point))
+		}
+	}
 }
