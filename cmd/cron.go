@@ -4,7 +4,9 @@ import (
 	"github.com/starudream/go-lib/cobra/v2"
 	"github.com/starudream/go-lib/service/v2"
 
+	_ "github.com/starudream/sign-task/pkg/aliyun"
 	_ "github.com/starudream/sign-task/pkg/douyu"
+	_ "github.com/starudream/sign-task/pkg/geetest"
 	_ "github.com/starudream/sign-task/pkg/kuro"
 	_ "github.com/starudream/sign-task/pkg/miyoushe"
 	_ "github.com/starudream/sign-task/pkg/skland"
