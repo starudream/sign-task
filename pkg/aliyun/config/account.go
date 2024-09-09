@@ -1,12 +1,12 @@
 package config
 
 type Account struct {
-	Key    string `json:"key"    yaml:"key"`
+	Id     string `json:"id"     yaml:"id"`
 	Secret string `json:"secret" yaml:"secret"`
 }
 
 func (account Account) GetKey() string {
-	return account.Key
+	return account.Id
 }
 
 func AddAccount(account Account) {

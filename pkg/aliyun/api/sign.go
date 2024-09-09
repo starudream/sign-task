@@ -36,7 +36,7 @@ func addSign(r *resty.Request, method, addr, path, action, version string, accou
 	signStr := strings.Join([]string{strings.ToUpper(method), path, queryStr, headerStr, headerKeys, bodyHex}, "\n")
 	signature := strings.ToLower(util.HMAC256Hex(account.Secret, Algorithm+"\n"+util.SHA256Hex(signStr)))
 
-	r.SetHeader("Authorization", fmt.Sprintf("%s Credential=%s,SignedHeaders=%s,Signature=%s", Algorithm, account.Key, headerKeys, signature))
+	r.SetHeader("Authorization", fmt.Sprintf("%s Credential=%s,SignedHeaders=%s,Signature=%s", Algorithm, account.Id, headerKeys, signature))
 }
 
 func genBody(body any) string {
