@@ -20,5 +20,5 @@ run: bin
 	DEBUG=true bin/$(PROJECT) $(ARGS)
 
 .PHONY: lint
-lint:
+lint: bin
 	golangci-lint run --sort-results --print-resources-usage --show-stats
