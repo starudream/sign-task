@@ -19,6 +19,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/kr/pretty v0.3.1
+	github.com/spf13/cast v1.7.0
 	golang.org/x/net v0.28.0
 )
 
@@ -45,7 +46,6 @@ require (
 	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/samber/lo v1.47.0 // indirect
-	github.com/spf13/cast v1.7.0 // indirect
 	github.com/spf13/cobra v1.8.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	golang.org/x/sync v0.8.0 // indirect

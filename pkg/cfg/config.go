@@ -3,6 +3,7 @@ package cfg
 import (
 	"bufio"
 	"bytes"
+	"cmp"
 	_ "embed"
 	"fmt"
 	"os"
@@ -10,6 +11,7 @@ import (
 	"slices"
 
 	"github.com/goccy/go-yaml"
+	"github.com/spf13/cast"
 
 	"github.com/starudream/go-lib/core/v2/config"
 	"github.com/starudream/go-lib/core/v2/slog"
@@ -35,13 +37,18 @@ func Sort(r string, m map[string]any) (ms yaml.MapSlice) {
 		if m1, ok1 := v.(map[string]any); ok1 {
 			ms = append(ms, item(r, k, Sort(key(r, k), m1)))
 		} else if s1, ok2 := v.([]any); ok2 {
-			s2 := make([]any, len(s1))
+			s2, fg := make([]any, len(s1)), false
 			for i := range s1 {
 				if m2, ok3 := s1[i].(map[string]any); ok3 {
 					s2[i] = Sort(key(r, k), m2)
 				} else {
-					s2[i] = s1[i]
+					s2[i], fg = s1[i], true
 				}
+			}
+			if fg {
+				slices.SortFunc(s2, func(a, b any) int {
+					return cmp.Compare(cast.ToString(a), cast.ToString(b))
+				})
 			}
 			ms = append(ms, item(r, k, s2))
 		} else {

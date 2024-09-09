@@ -92,7 +92,7 @@ $.aliyun.cron.spec
 $.aliyun.cron.startup
 $.aliyun.cron.jitter
 $.aliyun.accounts
-$.aliyun.accounts.key
+$.aliyun.accounts.id
 $.aliyun.accounts.secret
 
 $.log
