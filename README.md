@@ -8,6 +8,24 @@
 <img src="https://socialify.git.ci/starudream/sign-task/image?font=Inter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Circuit%20Board&pulls=1&stargazers=1&theme=Auto" alt="project">
 </p>
 
+## Feature
+
+- [x] 斗鱼
+  - [x] 领取荧光棒
+  - [x] 赠送荧光棒续粉丝牌
+- [x] 库街区
+  - [x] 游戏签到（鸣潮）
+  - [x] 论坛签到
+- [x] 米游社
+  - [x] 游戏签到（原神 崩坏 星铁 绝区零 等）
+  - [x] 论坛签到
+- [x] 森空岛
+  - [x] 游戏签到（明日方舟）
+- [x] 百度贴吧
+  - [x] 客户端签到
+- [x] 阿里云
+  - [x] 余额提醒
+
 ## Config
 
 <details>
