@@ -26,11 +26,15 @@ const (
 
 	GameNameBH3 = "bh3"
 	GameNameYS  = "hk4e"
+	GameNameBH2 = "bh2"
+	GameNameWD  = "nxx"
 	GameNameSR  = "hkrpg"
 	GameNameZZZ = "nap"
 
 	GameBizBH3CN = GameNameBH3 + "_" + cn
 	GameBizYSCN  = GameNameYS + "_" + cn
+	GameBizBH2CN = GameNameBH2 + "_" + cn
+	GameBizWDCN  = GameNameWD + "_" + cn
 	GameBizSRCN  = GameNameSR + "_" + cn
 	GameBizZZZCN = GameNameZZZ + "_" + cn
 
@@ -60,6 +64,8 @@ var (
 	GameIdByBiz = map[string]string{
 		GameBizBH3CN: GameIdBH3,
 		GameBizYSCN:  GameIdYS,
+		GameBizBH2CN: GameIdBH2,
+		GameBizWDCN:  GameIdWD,
 		GameBizSRCN:  GameIdSR,
 		GameBizZZZCN: GameIdZZZ,
 	}
