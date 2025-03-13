@@ -20,7 +20,7 @@ require (
 	github.com/gorilla/websocket v1.5.3
 	github.com/kr/pretty v0.3.1
 	github.com/spf13/cast v1.7.1
-	golang.org/x/net v0.34.0
+	golang.org/x/net v0.36.0
 )
 
 require (
