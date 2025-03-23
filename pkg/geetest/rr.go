@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/starudream/go-lib/core/v2/config"
+	"github.com/starudream/go-lib/core/v2/config/version"
 	"github.com/starudream/go-lib/core/v2/gh"
 	"github.com/starudream/go-lib/resty/v2"
 )
@@ -31,7 +32,7 @@ func rrR() *resty.Request {
 		rrClient = resty.New().
 			SetTimeout(60*time.Second).
 			SetHeader("Accept-Encoding", "gzip").
-			SetHeader("User-Agent", resty.UAWindowsChrome)
+			SetHeader("User-Agent", "sign-task/"+version.GetVersionInfo().GitVersion)
 		if rr.Proxy != "" {
 			_, err := url.Parse(rr.Proxy)
 			if err == nil {

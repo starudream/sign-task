@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/starudream/go-lib/core/v2/config/version"
 	"github.com/starudream/go-lib/core/v2/utils/reflectutil"
 	"github.com/starudream/go-lib/resty/v2"
 
@@ -22,7 +23,7 @@ func NewClient(account config.Account) *Client {
 	c.client = resty.New().
 		SetTimeout(30*time.Second).
 		SetHeader("Accept-Encoding", "gzip").
-		SetHeader("User-Agent", resty.UAWindowsChrome)
+		SetHeader("User-Agent", "sign-task/"+version.GetVersionInfo().GitVersion)
 	return c
 }
 
