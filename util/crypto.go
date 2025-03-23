@@ -16,8 +16,17 @@ func SHA256Hex(content string) string {
 	return HashHex(sha256.New(), content)
 }
 
+func HMAC256(key, content string) string {
+	return Hash(hmac.New(sha256.New, []byte(key)), content)
+}
+
 func HMAC256Hex(key, content string) string {
 	return HashHex(hmac.New(sha256.New, []byte(key)), content)
+}
+
+func Hash(h hash.Hash, content string) string {
+	h.Write([]byte(content))
+	return string(h.Sum(nil))
 }
 
 func HashHex(h hash.Hash, content string) string {

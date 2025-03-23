@@ -95,6 +95,16 @@ $.aliyun.accounts
 $.aliyun.accounts.id
 $.aliyun.accounts.secret
 
+$.volcengine
+$.volcengine.cron
+$.volcengine.cron.disable
+$.volcengine.cron.spec
+$.volcengine.cron.startup
+$.volcengine.cron.jitter
+$.volcengine.accounts
+$.volcengine.accounts.id
+$.volcengine.accounts.secret
+
 $.log
 $.log.console
 $.log.console.disabled
