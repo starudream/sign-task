@@ -25,6 +25,8 @@
   - [x] 客户端签到
 - [x] 阿里云
   - [x] 余额提醒
+- [x] 火山引擎
+  - [x] 余额提醒
 
 ## Config
 
@@ -133,6 +135,54 @@ aliyun:
   accounts:
     - id: ""
       secret: ""
+# 火山引擎
+volcengine:
+  cron:
+    spec: 10 0 0 * * *
+  accounts:
+    - id: ""
+      secret: ""
+```
+
+</details>
+
+<details>
+
+<summary>阿里云权限策略</summary>
+
+```json
+{
+  "Version": "1",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "bssapi:QueryAccountBalance",
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+</details>
+
+<details>
+
+<summary>火山引擎权限策略</summary>
+
+```json
+{
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "billing:QueryBalanceAcct"
+      ],
+      "Resource": [
+        "*"
+      ]
+    }
+  ]
+}
 ```
 
 </details>
