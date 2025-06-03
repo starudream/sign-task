@@ -25,8 +25,10 @@
   - [x] 客户端签到
 - [x] 阿里云
   - [x] 余额提醒
+  - [x] 历史账单详细
 - [x] 火山引擎
   - [x] 余额提醒
+  - [x] 历史账单详细
 
 ## Config
 
@@ -156,7 +158,10 @@ volcengine:
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": "bssapi:QueryAccountBalance",
+      "Action": [
+        "bss:DescribeAcccount",
+        "bss:QueryAccountBill"
+      ],
       "Resource": "*"
     }
   ]
@@ -175,7 +180,8 @@ volcengine:
     {
       "Effect": "Allow",
       "Action": [
-        "billing:QueryBalanceAcct"
+        "billing:QueryBalanceAcct",
+        "billing:ListBillDetail"
       ],
       "Resource": [
         "*"
