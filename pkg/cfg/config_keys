@@ -124,6 +124,7 @@ $.ntfy
 $.ntfy.timeout
 $.ntfy.proxy
 $.ntfy.retry
+$.ntfy.module
 $.ntfy.webhook
 $.ntfy.webhook.url
 $.ntfy.webhook.method

@@ -3,24 +3,24 @@ module github.com/starudream/sign-task
 go 1.24.0
 
 require (
-	github.com/starudream/go-lib/cobra/v2 v2.0.18
-	github.com/starudream/go-lib/core/v2 v2.1.8
-	github.com/starudream/go-lib/cron/v2 v2.0.17
-	github.com/starudream/go-lib/ntfy/v2 v2.0.18
-	github.com/starudream/go-lib/resty/v2 v2.0.20
-	github.com/starudream/go-lib/selfupdate/v2 v2.0.13
-	github.com/starudream/go-lib/service/v2 v2.0.13
+	github.com/starudream/go-lib/cobra/v2 v2.0.19
+	github.com/starudream/go-lib/core/v2 v2.1.9
+	github.com/starudream/go-lib/cron/v2 v2.0.18
+	github.com/starudream/go-lib/ntfy/v2 v2.0.22
+	github.com/starudream/go-lib/resty/v2 v2.0.21
+	github.com/starudream/go-lib/selfupdate/v2 v2.0.14
+	github.com/starudream/go-lib/service/v2 v2.0.14
 	github.com/starudream/go-lib/tablew/v2 v2.0.9
 )
 
 require (
 	github.com/go-viper/mapstructure/v2 v2.2.1
-	github.com/goccy/go-yaml v1.17.1
+	github.com/goccy/go-yaml v1.18.0
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/kr/pretty v0.3.1
-	github.com/spf13/cast v1.7.1
-	golang.org/x/net v0.39.0
+	github.com/spf13/cast v1.9.2
+	golang.org/x/net v0.40.0
 )
 
 require (
@@ -35,7 +35,7 @@ require (
 	github.com/knadh/koanf/maps v0.1.2 // indirect
 	github.com/knadh/koanf/v2 v2.2.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
-	github.com/lmittmann/tint v1.0.7 // indirect
+	github.com/lmittmann/tint v1.1.1 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
@@ -48,7 +48,7 @@ require (
 	github.com/samber/lo v1.50.0 // indirect
 	github.com/spf13/cobra v1.9.1 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
-	golang.org/x/sync v0.13.0 // indirect
-	golang.org/x/sys v0.32.0 // indirect
-	golang.org/x/text v0.24.0 // indirect
+	golang.org/x/sync v0.14.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/text v0.25.0 // indirect
 )

@@ -51,7 +51,7 @@ type respError struct {
 }
 
 func (t *baseResp[T]) IsSuccess() bool {
-	return t != nil
+	return t != nil && t.ResponseMetadata.Error.CodeN == 0
 }
 
 func (t *baseResp[T]) String() string {
