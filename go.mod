@@ -21,6 +21,7 @@ require (
 	github.com/kr/pretty v0.3.1
 	github.com/spf13/cast v1.9.2
 	golang.org/x/net v0.40.0
+	golang.org/x/text v0.25.0
 )
 
 require (
@@ -50,5 +51,4 @@ require (
 	github.com/spf13/pflag v1.0.6 // indirect
 	golang.org/x/sync v0.14.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/text v0.25.0 // indirect
 )

@@ -2,13 +2,13 @@ package aliyun
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/starudream/go-lib/core/v2/utils/poolutil"
 
 	"github.com/starudream/sign-task/pkg/aliyun/api"
 	"github.com/starudream/sign-task/pkg/aliyun/config"
 	"github.com/starudream/sign-task/pkg/cron"
+	"github.com/starudream/sign-task/util"
 )
 
 func init() {
@@ -42,10 +42,7 @@ func (j aliyun) do(a config.Account) {
 	{
 		buf := poolutil.BytesBuffer1024.Get()
 		defer poolutil.BytesBuffer1024.Put(buf)
-		now := time.Now()
-		et := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
-		be := now.AddDate(0, 0, -3)
-		for t := et; t.After(be); t = t.AddDate(0, 0, -1) {
+		for t := util.GetToday(); t.After(util.GetToday(-3)); t = t.AddDate(0, 0, -1) {
 			bills, err := c.QueryAccountBill(&api.QueryAccountBillReq{
 				BillingCycle:     t.Format("2006-01"),
 				IsGroupByProduct: true,

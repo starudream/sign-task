@@ -29,6 +29,7 @@
 - [x] 火山引擎
   - [x] 余额提醒
   - [x] 历史账单详细
+  - [x] 方舟模型使用量详细
 - [x] 腾讯云
   - [x] 余额提醒
 
@@ -214,6 +215,16 @@ qcloud:
       "Action": [
         "billing:QueryBalanceAcct",
         "billing:ListBillDetail"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ark:GetUsage",
+        "ark:ListEndpoints"
       ],
       "Resource": [
         "*"
