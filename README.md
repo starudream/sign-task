@@ -29,6 +29,8 @@
 - [x] 火山引擎
   - [x] 余额提醒
   - [x] 历史账单详细
+- [x] 腾讯云
+  - [x] 余额提醒
 
 ## Config
 
@@ -164,6 +166,16 @@ volcengine:
   accounts:
     - id: volcengine_id
       secret: volcengine_secret
+# 腾讯云
+qcloud:
+  cron:
+    disable: true
+    spec: 0 0 12 * * *
+    startup: false
+    jitter: 10
+  accounts:
+    - id: qcloud_id
+      key: qcloud_key
 ```
 
 </details>
@@ -208,6 +220,29 @@ volcengine:
       ]
     }
   ]
+}
+```
+
+</details>
+
+<details>
+
+<summary>腾讯云权限策略</summary>
+
+```json
+{
+  "statement": [
+    {
+      "action": [
+        "finance:DescribeAccountBalance"
+      ],
+      "effect": "allow",
+      "resource": [
+        "*"
+      ]
+    }
+  ],
+  "version": "2.0"
 }
 ```
 

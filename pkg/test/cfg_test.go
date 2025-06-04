@@ -12,6 +12,7 @@ import (
 	douyu "github.com/starudream/sign-task/pkg/douyu/config"
 	kuro "github.com/starudream/sign-task/pkg/kuro/config"
 	miyoushe "github.com/starudream/sign-task/pkg/miyoushe/config"
+	qcloud "github.com/starudream/sign-task/pkg/qcloud/config"
 	skland "github.com/starudream/sign-task/pkg/skland/config"
 	tieba "github.com/starudream/sign-task/pkg/tieba/config"
 	volcengine "github.com/starudream/sign-task/pkg/volcengine/config"
@@ -59,6 +60,10 @@ func Test(t *testing.T) {
 		CToken:      "miyoushe_ctoken",
 		SignGameIds: []string{"6"},
 	}})
+	config.Set("qcloud.accounts", []qcloud.Account{{
+		Id:  "qcloud_id",
+		Key: "qcloud_key",
+	}})
 	config.Set("skland.accounts", []skland.Account{{
 		Phone: "skland_phone",
 		Cred:  "skland_cred",
@@ -78,6 +83,7 @@ func Test(t *testing.T) {
 		"douyu",
 		"kuro",
 		"miyoushe",
+		"qcloud",
 		"skland",
 		"tieba",
 		"volcengine",

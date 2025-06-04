@@ -105,6 +105,16 @@ $.volcengine.accounts
 $.volcengine.accounts.id
 $.volcengine.accounts.secret
 
+$.qcloud
+$.qcloud.cron
+$.qcloud.cron.disable
+$.qcloud.cron.spec
+$.qcloud.cron.startup
+$.qcloud.cron.jitter
+$.qcloud.accounts
+$.qcloud.accounts.id
+$.qcloud.accounts.key
+
 $.log
 $.log.console
 $.log.console.disabled

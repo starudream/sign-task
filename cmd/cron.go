@@ -9,6 +9,7 @@ import (
 	_ "github.com/starudream/sign-task/pkg/geetest"
 	_ "github.com/starudream/sign-task/pkg/kuro"
 	_ "github.com/starudream/sign-task/pkg/miyoushe"
+	_ "github.com/starudream/sign-task/pkg/qcloud"
 	_ "github.com/starudream/sign-task/pkg/skland"
 	_ "github.com/starudream/sign-task/pkg/tieba"
 	_ "github.com/starudream/sign-task/pkg/volcengine"
