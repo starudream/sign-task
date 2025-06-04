@@ -21,4 +21,4 @@ run: bin
 
 .PHONY: lint
 lint: bin
-	golangci-lint run --sort-results --print-resources-usage --show-stats
+	golangci-lint run --print-resources-usage --show-stats

@@ -76,7 +76,7 @@ func TT(req *V3Param) (*V3Data, error) {
 			time.Sleep(3 * time.Second)
 			v, err = ttResult(req, resultId)
 			if v1, ok1 := resty.AsRespErr(err); ok1 {
-				if v2, ok2 := v1.Response.Result().(interface{ GetStatus() int }); ok2 && v2.GetStatus() == 2 {
+				if v2, ok2 := v1.Result().(interface{ GetStatus() int }); ok2 && v2.GetStatus() == 2 {
 					continue
 				}
 			}

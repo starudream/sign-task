@@ -85,7 +85,7 @@ type iRespErr struct {
 }
 
 func (e *iRespErr) String() string {
-	return fmt.Sprintf("response status: %s, error: %s", e.Response.Status(), e.esg)
+	return fmt.Sprintf("response status: %s, error: %s", e.Status(), e.esg)
 }
 
 func (e *iRespErr) Error() string {

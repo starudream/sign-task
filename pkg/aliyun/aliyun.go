@@ -57,8 +57,8 @@ func (j aliyun) do(a config.Account) {
 				break
 			}
 			for _, bill := range bills {
-				buf.WriteString(fmt.Sprintf("[%s]\n", bill.BillingDate))
-				buf.WriteString(fmt.Sprintf("%s(%s)：%.04f\n", bill.ProductName, bill.ProductCode, bill.PretaxAmount))
+				_, _ = fmt.Fprintf(buf, "[%s]\n", bill.BillingDate)
+				_, _ = fmt.Fprintf(buf, "%s(%s)：%.04f\n", bill.ProductName, bill.ProductCode, bill.PretaxAmount)
 			}
 		}
 		if buf.Len() > 0 {

@@ -63,25 +63,28 @@ ntfy:
 <summary>完整配置</summary>
 
 ```yaml
+#
+# https://github.com/starudream/sign-task
+#
 # 打码
 geetest:
   cron:
-    spec: 0 10 0 * * *
-    startup: true
-  rr:
-    key: "rrocr.com"
-  tt:
-    key: "ttocr.com"
+    disable: true
+    spec: 0 0 12 * * *
+    startup: false
+    jitter: 10
 # 斗鱼
 douyu:
   cron:
-    spec: 0 1 0 * * *
-    jitter: 3
+    disable: true
+    spec: 0 0 12 * * *
+    startup: false
+    jitter: 10
   accounts:
-    - phone: ""
-      did: ""
-      ltp0: ""
-      room: ""
+    - phone: douyu_phone
+      did: douyu_did
+      ltp0: douyu_ltp0
+      room: 9999
       assigns:
         - count: 1
         - room: 9999
@@ -89,61 +92,78 @@ douyu:
       ignore_expired_check: false
 # 库街区
 kuro:
+  cron:
+    disable: true
+    spec: 0 0 12 * * *
+    startup: false
+    jitter: 10
   accounts:
-    - phone: ""
-      dev_code: ""
-      token: ""
+    - phone: kuro_phone
+      dev_code: kuro_dev_code
+      token: kuro_token
 # 米游社
 miyoushe:
   cron:
-    spec: 0 5 0 * * *
-    jitter: 3
+    disable: true
+    spec: 0 0 12 * * *
+    startup: false
+    jitter: 10
   accounts:
-    - phone: ""
+    - phone: miyoushe_phone
       device:
-        id: ""
-        type: ""
-        name: ""
-        model: ""
-        version: ""
-        channel: ""
-      mid: ""
-      stoken: ""
-      uid: ""
-      ctoken: ""
+        id: device_id
+        type: device_type
+        name: device_name
+        model: device_model
+        version: device_version
+        channel: device_channel
+      mid: miyoushe_mid
+      stoken: miyoushe_stoken
+      uid: miyoushe_uid
+      ctoken: miyoushe_ctoken
       sign_game_ids:
         - "6"
 # 森空岛
 skland:
   cron:
-    spec: 0 3 0 * * *
-    jitter: 3
+    disable: true
+    spec: 0 0 12 * * *
+    startup: false
+    jitter: 10
   accounts:
-    - phone: ""
-      cred: ""
-      token: ""
+    - phone: skland_phone
+      cred: skland_cred
+      token: skland_token
 # 百度贴吧
 tieba:
   cron:
-    spec: 0 2 0 * * *
-    jitter: 3
+    disable: true
+    spec: 0 0 12 * * *
+    startup: false
+    jitter: 10
   accounts:
-    - phone: ""
-      bduss: ""
+    - phone: tieba_phone
+      bduss: tieba_bduss
 # 阿里云
 aliyun:
   cron:
-    spec: 10 0 0 * * *
+    disable: true
+    spec: 0 0 12 * * *
+    startup: false
+    jitter: 10
   accounts:
-    - id: ""
-      secret: ""
+    - id: aliyun_id
+      secret: aliyun_secret
 # 火山引擎
 volcengine:
   cron:
-    spec: 10 0 0 * * *
+    disable: true
+    spec: 0 0 12 * * *
+    startup: false
+    jitter: 10
   accounts:
-    - id: ""
-      secret: ""
+    - id: volcengine_id
+      secret: volcengine_secret
 ```
 
 </details>

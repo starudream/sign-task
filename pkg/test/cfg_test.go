@@ -8,6 +8,7 @@ import (
 
 	aliyun "github.com/starudream/sign-task/pkg/aliyun/config"
 	"github.com/starudream/sign-task/pkg/cfg"
+	"github.com/starudream/sign-task/pkg/cron"
 	douyu "github.com/starudream/sign-task/pkg/douyu/config"
 	kuro "github.com/starudream/sign-task/pkg/kuro/config"
 	miyoushe "github.com/starudream/sign-task/pkg/miyoushe/config"
@@ -17,95 +18,78 @@ import (
 )
 
 func Test(t *testing.T) {
-	config.Set("aliyun", aliyun.Config{
-		Accounts: []aliyun.Account{
+	config.Set("aliyun.accounts", []aliyun.Account{{
+		Id:     "aliyun_id",
+		Secret: "aliyun_secret",
+	}})
+	config.Set("douyu.accounts", []douyu.Account{{
+		Phone: "douyu_phone",
+		Did:   "douyu_did",
+		Ltp0:  "douyu_ltp0",
+		Room:  9999,
+		Assigns: []douyu.Assign{
 			{
-				Id:     "",
-				Secret: "",
+				Count: 1,
+			},
+			{
+				Room: 9999,
+				All:  true,
 			},
 		},
-	})
-	config.Set("douyu", douyu.Config{
-		Accounts: []douyu.Account{
-			{
-				Phone: "",
-				Did:   "",
-				Ltp0:  "",
-				Room:  0,
-				Assigns: []douyu.Assign{
-					{
-						Count: 0,
-						Room:  0,
-						All:   false,
-					},
-				},
-				IgnoreExpiredCheck: false,
-			},
+		IgnoreExpiredCheck: false,
+	}})
+	config.Set("kuro.accounts", []kuro.Account{{
+		Phone:   "kuro_phone",
+		DevCode: "kuro_dev_code",
+		Token:   "kuro_token",
+	}})
+	config.Set("miyoushe.accounts", []miyoushe.Account{{
+		Phone: "miyoushe_phone",
+		Device: miyoushe.Device{
+			Id:      "device_id",
+			Type:    "device_type",
+			Name:    "device_name",
+			Model:   "device_model",
+			Version: "device_version",
+			Channel: "device_channel",
 		},
-	})
-	config.Set("kuro", kuro.Config{
-		Accounts: []kuro.Account{
-			{
-				Phone:   "",
-				DevCode: "",
-				Token:   "",
-			},
-		},
-	})
-	config.Set("miyoushe", miyoushe.Config{
-		Accounts: []miyoushe.Account{
-			{
-				Phone: "",
-				Device: miyoushe.Device{
-					Id:      "",
-					Type:    "",
-					Name:    "",
-					Model:   "",
-					Version: "",
-					Channel: "",
-				},
-				Mid:         "",
-				SToken:      "",
-				Uid:         "",
-				CToken:      "",
-				SignGameIds: []string{},
-			},
-		},
-	})
-	config.Set("skland", skland.Config{
-		Accounts: []skland.Account{
-			{
-				Phone: "",
-				Cred:  "",
-				Token: "",
-			},
-		},
-	})
-	config.Set("tieba", tieba.Config{
-		Accounts: []tieba.Account{
-			{
-				Phone: "",
-				BDUSS: "",
-			},
-		},
-	})
-	config.Set("volcengine", volcengine.Config{
-		Accounts: []volcengine.Account{
-			{
-				Id:     "",
-				Secret: "",
-			},
-		},
-	})
+		Mid:         "miyoushe_mid",
+		SToken:      "miyoushe_stoken",
+		Uid:         "miyoushe_uid",
+		CToken:      "miyoushe_ctoken",
+		SignGameIds: []string{"6"},
+	}})
+	config.Set("skland.accounts", []skland.Account{{
+		Phone: "skland_phone",
+		Cred:  "skland_cred",
+		Token: "skland_token",
+	}})
+	config.Set("tieba.accounts", []tieba.Account{{
+		Phone: "tieba_phone",
+		BDUSS: "tieba_bduss",
+	}})
+	config.Set("volcengine.accounts", []volcengine.Account{{
+		Id:     "volcengine_id",
+		Secret: "volcengine_secret",
+	}})
 
-	// for _, v := range []string{"aliyun", "douyu", "kuro", "miyoushe", "skland", "tieba", "volcengine"} {
-	// 	config.Set(v+".cron", cron.Config{
-	// 		Disable: true,
-	// 		Spec:    "0 0 4,12,20 * * *",
-	// 		Startup: false,
-	// 		Jitter:  0,
-	// 	})
-	// }
+	for _, v := range []string{
+		"aliyun",
+		"douyu",
+		"kuro",
+		"miyoushe",
+		"skland",
+		"tieba",
+		"volcengine",
+		"geetest",
+	} {
+		config.Set(v+".cron", cron.Config{
+			Disable: true,
+			Spec:    "0 0 12 * * *",
+			Startup: false,
+			Jitter:  10,
+		})
+	}
 
 	testutil.LogNoErr(t, cfg.Save())
 }

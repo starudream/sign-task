@@ -59,8 +59,8 @@ func (j volcengine) do(a config.Account) {
 				break
 			}
 			for _, bill := range bills {
-				buf.WriteString(fmt.Sprintf("[%s]\n", bill.ExpenseDate))
-				buf.WriteString(fmt.Sprintf("%s(%s)：%s\n", bill.ProductZh, bill.Product, bill.PayableAmount))
+				_, _ = fmt.Fprintf(buf, "[%s]\n", bill.ExpenseDate)
+				_, _ = fmt.Fprintf(buf, "%s(%s)：%s\n", bill.ProductZh, bill.Product, bill.PayableAmount)
 			}
 		}
 		if buf.Len() > 0 {
