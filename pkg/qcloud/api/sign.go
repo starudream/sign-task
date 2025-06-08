@@ -31,12 +31,13 @@ func addSign(r *resty.Request, method, addr, path, action, version, region, serv
 	r.SetHeader("Host", host)
 	r.SetHeader("Content-Type", "application/json")
 	r.SetHeader("x-tc-action", action)
-	r.SetHeader("x-tc-region", region)
 	r.SetHeader("x-tc-version", version)
 	r.SetHeader("x-tc-timestamp", timestamp)
 
 	queryStr := genQuery(r.QueryParam)
 	headerStr, headerKeys := genHeader(r.Header)
+
+	r.SetHeader("x-tc-region", region)
 
 	reqStr := strings.Join([]string{strings.ToUpper(method), path, queryStr, headerStr, headerKeys, bodyHex}, "\n")
 	scopeStr := strings.Join([]string{date, service, "tc3_request"}, "/")

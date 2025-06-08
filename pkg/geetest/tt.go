@@ -3,7 +3,6 @@ package geetest
 import (
 	"fmt"
 	"net/url"
-	"strconv"
 	"time"
 
 	"github.com/starudream/go-lib/core/v2/config"
@@ -59,7 +58,7 @@ func TTPoint(req *V3Param) (int, error) {
 	if err != nil {
 		return -1, fmt.Errorf("[ttocr] %w", err)
 	}
-	return strconv.Atoi(res.Points)
+	return res.Points, nil
 }
 
 func TT(req *V3Param) (*V3Data, error) {
@@ -98,7 +97,7 @@ type ttResp struct {
 	Msg      string  `json:"msg"`
 	ResultId string  `json:"resultid,omitempty"`
 	Data     *V3Data `json:"data,omitempty"`
-	Points   string  `json:"points,omitempty"`
+	Points   int     `json:"points,omitempty"`
 }
 
 func (t *ttResp) GetStatus() int {
