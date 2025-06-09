@@ -26,6 +26,7 @@
 - [x] 阿里云
   - [x] 余额提醒
   - [x] 历史账单详细
+  - [x] CDT使用量详细
 - [x] 火山引擎
   - [x] 余额提醒
   - [x] 历史账单详细
@@ -193,7 +194,8 @@ qcloud:
       "Effect": "Allow",
       "Action": [
         "bss:DescribeAcccount",
-        "bss:QueryAccountBill"
+        "bss:QueryAccountBill",
+        "bssapi:DescribeInstanceBill"
       ],
       "Resource": "*"
     }

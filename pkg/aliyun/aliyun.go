@@ -2,6 +2,7 @@ package aliyun
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/starudream/go-lib/core/v2/utils/poolutil"
 
@@ -60,6 +61,31 @@ func (j aliyun) do(a config.Account) {
 		}
 		if buf.Len() > 0 {
 			cron.Ntfy(j, "阿里云", buf.String())
+		}
+	}
+
+	{
+		items, err := c.DescribeInstanceBill(&api.DescribeInstanceBillReq{
+			BillingCycle:     util.GetToday().Format("2006-01"),
+			ProductCode:      "cdt",
+			Granularity:      "MONTHLY",
+			IsBillingItem:    true,
+			IsHideZeroCharge: false,
+		})
+		if err != nil {
+			cron.Ntfy(j, "阿里云", fmt.Sprintf("执行失败（%s）", err))
+		} else {
+			usage, usageUnit := float64(0), ""
+			for _, item := range items {
+				_usage, _ := strconv.ParseFloat(item.Usage, 64)
+				if _usage > 0 {
+					usage += _usage
+				}
+				if item.UsageUnit != "" {
+					usageUnit = item.UsageUnit
+				}
+			}
+			cron.Ntfy(j, "阿里云", fmt.Sprintf("CDT 本月已使用：%.04f %s", usage, usageUnit))
 		}
 	}
 }

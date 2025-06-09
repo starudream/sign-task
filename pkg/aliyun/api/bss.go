@@ -66,3 +66,54 @@ func (c *Client) QueryAccountBill(req *QueryAccountBillReq) ([]*QueryAccountBill
 	}
 	return items, nil
 }
+
+type DescribeInstanceBillReq struct {
+	NextToken  string `json:"NextToken,omitempty"`
+	MaxResults string `json:"MaxResults"`
+
+	BillingCycle     string `json:"BillingCycle"`
+	ProductCode      string `json:"ProductCode"`
+	Granularity      string `json:"Granularity"`
+	IsBillingItem    bool   `json:"IsBillingItem"`
+	IsHideZeroCharge bool   `json:"IsHideZeroCharge"`
+}
+
+type DescribeInstanceBillData struct {
+	NextToken  string `json:"NextToken"`
+	MaxResults int    `json:"MaxResults"`
+	TotalCount int    `json:"TotalCount"`
+
+	AccountID    string `json:"AccountID"`
+	AccountName  string `json:"AccountName"`
+	BillingCycle string `json:"BillingCycle"`
+
+	Items []*DescribeInstanceBillItem `json:"Items"`
+}
+
+type DescribeInstanceBillItem struct {
+	ProductCode  string  `json:"ProductCode"`
+	ProductName  string  `json:"ProductName"`
+	Usage        string  `json:"Usage"`
+	UsageUnit    string  `json:"UsageUnit"`
+	PretaxAmount float64 `json:"PretaxAmount"`
+}
+
+func (c *Client) DescribeInstanceBill(req *DescribeInstanceBillReq) ([]*DescribeInstanceBillItem, error) {
+	var items []*DescribeInstanceBillItem
+	for i := 1; i < 100; i++ {
+		if i == 1 {
+			req.NextToken = ""
+		}
+		req.MaxResults = "100"
+		data, err := Exec[*DescribeInstanceBillData](c.R().SetQueryParams(util.ToMapString(req)), "POST", AddrBSS, "/", "DescribeInstanceBill", "2017-12-14", c.account)
+		if err != nil {
+			return nil, err
+		}
+		items = append(items, data.Items...)
+		if len(items) >= data.TotalCount || data.NextToken == "" {
+			break
+		}
+		req.NextToken = data.NextToken
+	}
+	return items, nil
+}

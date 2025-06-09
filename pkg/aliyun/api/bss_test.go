@@ -20,3 +20,14 @@ func TestClient_QueryAccountBill(t *testing.T) {
 	})
 	testutil.LogNoErr(t, err, data)
 }
+
+func TestClient_DescribeInstanceBill(t *testing.T) {
+	data, err := C.DescribeInstanceBill(&DescribeInstanceBillReq{
+		BillingCycle:     "2025-06",
+		ProductCode:      "cdt",
+		Granularity:      "MONTHLY",
+		IsBillingItem:    true,
+		IsHideZeroCharge: false,
+	})
+	testutil.LogNoErr(t, err, data)
+}
