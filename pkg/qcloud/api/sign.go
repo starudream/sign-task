@@ -29,19 +29,18 @@ func addSign(r *resty.Request, method, addr, path, action, version, region, serv
 	bodyHex := genBody(r.Body)
 
 	r.SetHeader("Host", host)
-	r.SetHeader("Content-Type", "application/json")
+	r.SetHeader("Content-Type", "application/json; charset=utf-8")
 	r.SetHeader("x-tc-action", action)
 	r.SetHeader("x-tc-version", version)
 	r.SetHeader("x-tc-timestamp", timestamp)
+	r.SetHeader("x-tc-region", region)
 
 	queryStr := genQuery(r.QueryParam)
 	headerStr, headerKeys := genHeader(r.Header)
 
-	r.SetHeader("x-tc-region", region)
-
 	reqStr := strings.Join([]string{strings.ToUpper(method), path, queryStr, headerStr, headerKeys, bodyHex}, "\n")
 	scopeStr := strings.Join([]string{date, service, "tc3_request"}, "/")
-	signStr := strings.Join([]string{Algorithm, timestamp, scopeStr, util.SHA256Hex(reqStr)}, "\n")
+	signStr := strings.Join([]string{Algorithm, timestamp, scopeStr, strings.ToLower(util.SHA256Hex(reqStr))}, "\n")
 	keyBs := util.HMAC256(util.HMAC256(util.HMAC256("TC3"+account.Key, date), service), "tc3_request")
 	signature := strings.ToLower(util.HMAC256Hex(keyBs, signStr))
 
@@ -53,7 +52,7 @@ func genBody(body any) string {
 	if body != nil {
 		s = json.MustMarshalString(body)
 	}
-	return util.SHA256Hex(s)
+	return strings.ToLower(util.SHA256Hex(s))
 }
 
 func genQuery(query url.Values) string {
@@ -71,9 +70,10 @@ func genHeader(header http.Header) (string, string) {
 	lks := make([]string, len(keys))
 	for i := 0; i < len(keys); i++ {
 		key := strings.ToLower(keys[i])
+		val := strings.ToLower(header.Get(keys[i]))
 		buf.WriteString(key)
 		buf.WriteByte(':')
-		buf.WriteString(strings.ToLower(header.Get(key)))
+		buf.WriteString(val)
 		buf.WriteByte('\n')
 		lks[i] = key
 	}
