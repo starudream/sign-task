@@ -1,6 +1,7 @@
 package volcengine
 
 import (
+	"bytes"
 	"fmt"
 	"maps"
 	"slices"
@@ -80,12 +81,19 @@ func (j volcengine) doArk(c *api.Client) {
 		cron.Ntfy(j, "火山方舟", fmt.Sprintf("执行失败（%s）", err))
 		return
 	}
+
+	buf := poolutil.BytesBuffer1024.Get()
+	defer poolutil.BytesBuffer1024.Put(buf)
+
 	for _, ep := range endpoints {
-		j.doArkEp(c, ep)
+		j.doArkEp(c, ep, buf)
+	}
+	if buf.Len() > 0 {
+		cron.Ntfy(j, "火山方舟", buf.String())
 	}
 }
 
-func (j volcengine) doArkEp(c *api.Client, ep *api.ListArkEndpointsItem) {
+func (j volcengine) doArkEp(c *api.Client, ep *api.ListArkEndpointsItem, buf *bytes.Buffer) {
 	usages, err := c.GetArkUsage(&api.GetArkUsageReq{
 		StartTime:   int(util.GetToday(-3).Unix()),
 		EndTime:     int(util.GetToday(1).Unix() - 1),
@@ -113,9 +121,6 @@ func (j volcengine) doArkEp(c *api.Client, ep *api.ListArkEndpointsItem) {
 		return
 	}
 
-	buf := poolutil.BytesBuffer1024.Get()
-	defer poolutil.BytesBuffer1024.Put(buf)
-
 	_, _ = fmt.Fprintf(buf, "%s\n", ep.Name)
 
 	keys := slices.Collect(maps.Keys(data))
@@ -135,8 +140,5 @@ func (j volcengine) doArkEp(c *api.Client, ep *api.ListArkEndpointsItem) {
 			}
 			_, _ = fmt.Fprintf(buf, "%s：%s\n", cname, util.FormatInt(data[key][name]))
 		}
-	}
-	if buf.Len() > 0 {
-		cron.Ntfy(j, "火山方舟", buf.String())
 	}
 }
