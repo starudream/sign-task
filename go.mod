@@ -3,29 +3,29 @@ module github.com/starudream/sign-task
 go 1.24.0
 
 require (
-	github.com/starudream/go-lib/cobra/v2 v2.0.19
-	github.com/starudream/go-lib/core/v2 v2.1.9
-	github.com/starudream/go-lib/cron/v2 v2.0.18
-	github.com/starudream/go-lib/ntfy/v2 v2.0.22
-	github.com/starudream/go-lib/resty/v2 v2.0.21
-	github.com/starudream/go-lib/selfupdate/v2 v2.0.14
-	github.com/starudream/go-lib/service/v2 v2.0.14
+	github.com/starudream/go-lib/cobra/v2 v2.0.20
+	github.com/starudream/go-lib/core/v2 v2.1.11
+	github.com/starudream/go-lib/cron/v2 v2.0.20
+	github.com/starudream/go-lib/ntfy/v2 v2.0.23
+	github.com/starudream/go-lib/resty/v2 v2.0.22
+	github.com/starudream/go-lib/selfupdate/v2 v2.0.15
+	github.com/starudream/go-lib/service/v2 v2.0.15
 	github.com/starudream/go-lib/tablew/v2 v2.0.9
 )
 
 require (
-	github.com/go-viper/mapstructure/v2 v2.2.1
+	github.com/go-viper/mapstructure/v2 v2.3.0
 	github.com/goccy/go-yaml v1.18.0
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/kr/pretty v0.3.1
 	github.com/spf13/cast v1.9.2
-	golang.org/x/net v0.40.0
-	golang.org/x/text v0.25.0
+	golang.org/x/net v0.42.0
+	golang.org/x/text v0.27.0
 )
 
 require (
-	github.com/Masterminds/semver/v3 v3.3.1 // indirect
+	github.com/Masterminds/semver/v3 v3.4.0 // indirect
 	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/cheggaaa/pb/v3 v3.1.7 // indirect
 	github.com/fatih/color v1.18.0 // indirect
@@ -34,9 +34,9 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/kardianos/service v1.2.2 // indirect
 	github.com/knadh/koanf/maps v0.1.2 // indirect
-	github.com/knadh/koanf/v2 v2.2.0 // indirect
+	github.com/knadh/koanf/v2 v2.2.2 // indirect
 	github.com/kr/text v0.2.0 // indirect
-	github.com/lmittmann/tint v1.1.1 // indirect
+	github.com/lmittmann/tint v1.1.2 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
@@ -46,9 +46,9 @@ require (
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
-	github.com/samber/lo v1.50.0 // indirect
+	github.com/samber/lo v1.51.0 // indirect
 	github.com/spf13/cobra v1.9.1 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
-	golang.org/x/sync v0.14.0 // indirect
-	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/sync v0.16.0 // indirect
+	golang.org/x/sys v0.34.0 // indirect
 )
