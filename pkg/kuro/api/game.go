@@ -10,7 +10,7 @@ import (
 )
 
 type Role struct {
-	UserId     int    `json:"userId"`
+	UserId     string `json:"userId"`
 	GameId     int    `json:"gameId"`
 	ServerId   string `json:"serverId"`
 	ServerName string `json:"serverName"`
@@ -76,9 +76,9 @@ type SignGameData struct {
 	TomorrowList Goods `json:"tomorrowList"`
 }
 
-func (c *Client) SignGame(gid int, sid, rid string, uid int) (*SignGameData, error) {
+func (c *Client) SignGame(gid int, sid, rid, uid string) (*SignGameData, error) {
 	month := fmt.Sprintf("%02d", time.Now().Month())
-	req := c.R().SetFormData(gh.MS{"gameId": strconv.Itoa(gid), "serverId": sid, "roleId": rid, "userId": strconv.Itoa(uid), "reqMonth": month})
+	req := c.R().SetFormData(gh.MS{"gameId": strconv.Itoa(gid), "serverId": sid, "roleId": rid, "userId": uid, "reqMonth": month})
 	return Exec[*SignGameData](req, "POST", "/encourage/signIn/v2")
 }
 
@@ -113,12 +113,12 @@ func (v *ListSignGameData) GoodsMap() map[int]*Good {
 	return m
 }
 
-func (c *Client) ListSignGame(gid int, sid, rid string, uid int) (*ListSignGameData, error) {
-	req := c.R().SetFormData(gh.MS{"gameId": strconv.Itoa(gid), "serverId": sid, "roleId": rid, "userId": strconv.Itoa(uid)})
+func (c *Client) ListSignGame(gid int, sid, rid, uid string) (*ListSignGameData, error) {
+	req := c.R().SetFormData(gh.MS{"gameId": strconv.Itoa(gid), "serverId": sid, "roleId": rid, "userId": uid})
 	return Exec[*ListSignGameData](req, "POST", "/encourage/signIn/initSignInV2")
 }
 
-func (c *Client) ListSignGameRecord(gid int, sid, rid string, uid int) (Goods, error) {
-	req := c.R().SetFormData(gh.MS{"gameId": strconv.Itoa(gid), "serverId": sid, "roleId": rid, "userId": strconv.Itoa(uid)})
+func (c *Client) ListSignGameRecord(gid int, sid, rid, uid string) (Goods, error) {
+	req := c.R().SetFormData(gh.MS{"gameId": strconv.Itoa(gid), "serverId": sid, "roleId": rid, "userId": uid})
 	return Exec[Goods](req, "POST", "/encourage/signIn/queryRecordV2")
 }
