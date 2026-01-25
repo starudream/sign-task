@@ -11,8 +11,10 @@ const (
 	DId           = "743a446c83032899"
 
 	GameIdArknights = "1" // 明日方舟
+	GameIdEndfield  = "3" // 终末地
 
 	GameAppCodeArknights = "arknights"
+	GameAppCodeEndfield  = "endfield"
 )
 
 const (
@@ -22,5 +24,6 @@ const (
 var (
 	GameIdByCode = map[string]string{
 		GameAppCodeArknights: GameIdArknights,
+		GameAppCodeEndfield:  GameIdEndfield,
 	}
 )
