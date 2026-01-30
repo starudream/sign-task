@@ -76,12 +76,18 @@ func SignGamePlayer(c *api.Client, app *api.PlayersByApp, player *api.Player) (r
 	record.PlayerUid = player.Uid
 	record.PlayerChannel = player.ChannelName
 
+	role := player.GetDefaultRole()
+	if role.RoleId != "" {
+		record.PlayerName = role.Nickname
+		record.PlayerUid = role.RoleId
+	}
+
 	if record.GameId == "" {
 		record.Error = fmt.Errorf("game code %s not supported", app.AppCode)
 		return
 	}
 
-	list, err := c.ListSignGame(record.GameId, player.Uid)
+	list, err := c.ListSignGame(record.GameId, player.Uid, role.RoleId, role.ServerId)
 	if err != nil {
 		record.Error = fmt.Errorf("list sign game error: %w", err)
 		return
@@ -92,9 +98,13 @@ func SignGamePlayer(c *api.Client, app *api.PlayersByApp, player *api.Player) (r
 		record.HasSigned = true
 		record.Award = today.ShortString(list.ResourceInfoMap)
 		return
+	} else if list.HasToday {
+		record.HasSigned = true
+		record.Award = "成功"
+		return
 	}
 
-	sgd, err := c.SignGame(record.GameId, player.Uid)
+	sgd, err := c.SignGame(record.GameId, player.Uid, role.RoleId, role.ServerId)
 	if err != nil {
 		if api.IsCode(err, api.CodeGameHasSigned) {
 			record.HasSigned = true

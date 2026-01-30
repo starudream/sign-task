@@ -12,8 +12,8 @@ func TestClient_ListPlayer(t *testing.T) {
 }
 
 func TestClient_SignGame(t *testing.T) {
-	gid, player := GetPlayer(t)
-	data, err := C.SignGame(gid, player.Uid)
+	gid, player := GetPlayer(t, 0)
+	data, err := C.SignGame(gid, player.Uid, player.GetDefaultRole().RoleId, player.GetDefaultRole().ServerId)
 	if IsCode(err, CodeGameHasSigned) {
 		t.Log("game has signed")
 		return
@@ -22,16 +22,16 @@ func TestClient_SignGame(t *testing.T) {
 }
 
 func TestClient_ListSignGame(t *testing.T) {
-	gid, player := GetPlayer(t)
-	data, err := C.ListSignGame(gid, player.Uid)
+	gid, player := GetPlayer(t, 0)
+	data, err := C.ListSignGame(gid, player.Uid, player.GetDefaultRole().RoleId, player.GetDefaultRole().ServerId)
 	testutil.LogNoErr(t, err, data)
 }
 
-func GetPlayer(t *testing.T) (string, *Player) {
+func GetPlayer(t *testing.T, i int) (string, *Player) {
 	data, err := C.ListPlayer()
 	testutil.LogNoErr(t, err, data)
 	testutil.MustNotEqual(t, 0, len(data.List))
-	testutil.MustNotEqual(t, 0, len(data.List[0].BindingList))
-	testutil.MustNotEqual(t, "", GameIdByCode[data.List[0].AppCode])
-	return GameIdByCode[data.List[0].AppCode], data.List[0].BindingList[0]
+	testutil.MustNotEqual(t, 0, len(data.List[i].BindingList))
+	testutil.MustNotEqual(t, "", GameIdByCode[data.List[i].AppCode])
+	return GameIdByCode[data.List[i].AppCode], data.List[i].BindingList[0]
 }

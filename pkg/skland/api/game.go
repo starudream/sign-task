@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -27,6 +28,26 @@ type Player struct {
 	IsOfficial      bool   `json:"isOfficial"`
 	IsDefault       bool   `json:"isDefault"`
 	IsDelete        bool   `json:"isDelete"`
+
+	DefaultRole *PlayerRole `json:"defaultRole"`
+}
+
+func (p *Player) GetDefaultRole() *PlayerRole {
+	if p == nil || p.DefaultRole == nil {
+		return &PlayerRole{}
+	}
+	return p.DefaultRole
+}
+
+type PlayerRole struct {
+	ServerId   string `json:"serverId"`
+	ServerType string `json:"serverType"`
+	ServerName string `json:"serverName"`
+	RoleId     string `json:"roleId"`
+	Nickname   string `json:"nickname"`
+	Level      int    `json:"level"`
+	IsDefault  bool   `json:"isDefault"`
+	IsBanned   bool   `json:"isBanned"`
 }
 
 func (c *Client) ListPlayer() (*ListPlayerData, error) {
@@ -58,19 +79,29 @@ type SignGameRes struct {
 	Id     string `json:"id"`
 	Type   string `json:"type"`
 	Name   string `json:"name"`
-	Rarity int    `json:"rarity"`
+	Rarity int    `json:"rarity,omitempty"` // 明日方舟
+	Count  int    `json:"count,omitempty"`  // 终末地
 }
 
-func (c *Client) SignGame(gid, uid string) (*SignGameData, error) {
-	req := c.R().SetBody(gh.M{"gameId": gid, "uid": uid})
-	return Exec[*SignGameData](req, "POST", AddrZonai+"/api/v1/game/attendance", c.account)
+func (c *Client) SignGame(gid, uid, rid, sid string) (*SignGameData, error) {
+	switch gid {
+	case GameIdArknights:
+		req := c.R().SetBody(gh.M{"gameId": gid, "uid": uid})
+		return Exec[*SignGameData](req, "POST", AddrZonai+"/api/v1/game/attendance", c.account)
+	case GameIdEndfield:
+		req := c.R().SetHeader("sk-game-role", fmt.Sprintf("%s_%s_%s", gid, rid, sid)).
+			SetBody(gh.MS{"gameId": gid, "roleId": rid, "serverId": sid})
+		return Exec[*SignGameData](req, "POST", AddrZonai+"/api/v1/game/endfield/attendance", c.account)
+	}
+	return nil, fmt.Errorf("unsupported game: %s", gid)
 }
 
 type ListAttendanceData struct {
 	CurrentTs       string                  `json:"currentTs"`
 	Calendar        []*Calendar             `json:"calendar"`
-	Records         CalendarRecords         `json:"records"`
 	ResourceInfoMap map[string]*SignGameRes `json:"resourceInfoMap"`
+	Records         CalendarRecords         `json:"records"`  // 明日方舟
+	HasToday        bool                    `json:"hasToday"` // 终末地
 }
 
 type CalendarRecords []*CalendarRecord
@@ -96,7 +127,8 @@ func (v1 CalendarRecords) ShortString(m map[string]*SignGameRes) string {
 }
 
 type Calendar struct {
-	ResourceId string `json:"resourceId"`
+	ResourceId string `json:"resourceId"` // 明日方舟
+	AwardId    string `json:"awardId"`    // 终末地
 	Type       string `json:"type"`
 	Count      int    `json:"count"`
 	Available  bool   `json:"available"`
@@ -110,7 +142,15 @@ type CalendarRecord struct {
 	Count      int    `json:"count"`
 }
 
-func (c *Client) ListSignGame(gid, uid string) (*ListAttendanceData, error) {
-	req := c.R().SetQueryParams(gh.MS{"gameId": gid, "uid": uid})
-	return Exec[*ListAttendanceData](req, "GET", AddrZonai+"/api/v1/game/attendance", c.account)
+func (c *Client) ListSignGame(gid, uid, rid, sid string) (*ListAttendanceData, error) {
+	switch gid {
+	case GameIdArknights:
+		req := c.R().SetQueryParams(gh.MS{"gameId": gid, "uid": uid})
+		return Exec[*ListAttendanceData](req, "GET", AddrZonai+"/api/v1/game/attendance", c.account)
+	case GameIdEndfield:
+		req := c.R().SetHeader("sk-game-role", fmt.Sprintf("%s_%s_%s", gid, rid, sid)).
+			SetQueryParams(gh.MS{"gameId": gid, "roleId": rid, "serverId": sid})
+		return Exec[*ListAttendanceData](req, "GET", AddrZonai+"/api/v1/game/endfield/attendance", c.account)
+	}
+	return nil, fmt.Errorf("unsupported game: %s", gid)
 }
