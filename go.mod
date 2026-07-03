@@ -1,6 +1,6 @@
 module github.com/starudream/sign-task
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/starudream/go-lib/cobra/v2 v2.0.22
@@ -20,8 +20,8 @@ require (
 	github.com/gorilla/websocket v1.5.3
 	github.com/kr/pretty v0.3.1
 	github.com/spf13/cast v1.10.0
-	golang.org/x/net v0.49.0
-	golang.org/x/text v0.33.0
+	golang.org/x/net v0.55.0
+	golang.org/x/text v0.37.0
 )
 
 require (
@@ -50,6 +50,6 @@ require (
 	github.com/samber/lo v1.52.0 // indirect
 	github.com/spf13/cobra v1.10.2 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
-	golang.org/x/sync v0.19.0 // indirect
-	golang.org/x/sys v0.40.0 // indirect
+	golang.org/x/sync v0.20.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
 )
